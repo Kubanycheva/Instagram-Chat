@@ -58,7 +58,15 @@ class FollowSerializer(serializers.ModelSerializer):
         fields = ['follower', 'following', 'created_at']
 
 
-class PostSerializer(serializers.ModelSerializer):
+class PostListSerializer(serializers.ModelSerializer):
+    user = UserProfileSimpleSerializer()
+
+    class Meta:
+        model = Post
+        fields = ['user', 'image', 'hashtag', 'created_at']
+
+
+class PostDetailSerializer(serializers.ModelSerializer):
     user = UserProfileSimpleSerializer()
 
     class Meta:
@@ -76,7 +84,7 @@ class PostSimpleSerializer(serializers.ModelSerializer):
 
 class PostLikeSerializer(serializers.ModelSerializer):
     user = UserProfileSimpleSerializer()
-    post = PostSerializer()
+    post = PostListSerializer()
 
     class Meta:
         model = PostLike
@@ -117,7 +125,7 @@ class SavedSerializer(serializers.ModelSerializer):
 
 
 class SaveItemSerializer(serializers.ModelSerializer):
-    post = PostSerializer()
+    post = PostListSerializer()
     saved = SavedSerializer()
 
     class Meta:

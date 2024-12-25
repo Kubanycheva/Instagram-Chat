@@ -55,17 +55,22 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         return UserProfile.objects.filter(username=self.request.user)
 
 
-class FollowListCreateAPIView(generics.ListCreateAPIView):
+class FollowListAPIView(generics.ListAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
 
 
-class PostListCreateAPIView(generics.ListCreateAPIView):
+class PostListAPIView(generics.ListAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostListSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = PostFilter
     ordering_fields = ['created_at']
+
+
+class PostDetailAPIView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
 
 
 class PostLikeListAPIView(generics.ListAPIView):
